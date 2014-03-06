@@ -15,7 +15,9 @@ class PetsController < ApplicationController
 		if !user_signed_in?
 			redirect_to new_user_session_path
 		else
+
 			@pet = Pet.new(pet_params)
+			@pet.owner = current_user.email
 
 			respond_to do |format|
 				if @pet.save
@@ -30,6 +32,6 @@ class PetsController < ApplicationController
 	end
 
 	def pet_params
-		params.require(:pet).permit(:name, :description)
+		params.require(:pet).permit(:name, :description, :owner)
 	end
 end
